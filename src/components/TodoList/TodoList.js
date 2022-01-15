@@ -1,9 +1,18 @@
 import React from "react";
 import TodoElement from "./TodoElement/TodoElement";
 import { connect } from "react-redux";
-import { VisibilityFilters, toggleTodo, deleteTodo } from "../../store/actions";
+import {
+  VisibilityFilters,
+  toggleTodo,
+  deleteTodo,
+  fetchTodo,
+} from "../../store/actions";
 
-const TodoList = ({ todos, deleteTodo, toggleTodo }) => {
+function TodoList(props) {
+  props.fetchTodo();
+
+  const { todos, deleteTodo, toggleTodo } = props;
+
   return (
     <ul className="list-group">
       {todos &&
@@ -17,36 +26,33 @@ const TodoList = ({ todos, deleteTodo, toggleTodo }) => {
         ))}
     </ul>
   );
-};
+}
 
 export default connect(
   (state) => {
-    // console.log("TodoList.js - state.filter :");
-    // console.log(state);
-
     const filter = state.filterReducer;
     let todos;
 
     switch (filter) {
       case VisibilityFilters.SHOW_DONE: {
-        todos = state.todoReducer.filter((todo) => todo.done);
+        todos = state.todoReducer.data.filter((todo) => todo.done);
         break;
       }
       case VisibilityFilters.SHOW_PENDING: {
-        todos = state.todoReducer.filter((todo) => !todo.done);
+        todos = state.todoReducer.data.filter((todo) => !todo.done);
         break;
       }
       default: {
-        todos = state.todoReducer;
+        todos = state.todoReducer.data;
         break;
       }
     }
-    //console.log("TodoList.js - how many todos: " + todos.length);
 
     return { todos };
   },
   {
     toggleTodo,
     deleteTodo,
+    fetchTodo,
   }
 )(TodoList);
