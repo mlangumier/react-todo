@@ -9,20 +9,25 @@ export const todoReducer = (
   action
 ) => {
   switch (action.type) {
-    case actions.ADD_TODO:
+    case actions.ADD_TODO_SUCCESS:
       return {
         ...state,
         data: [...state.data, action.todo],
       };
+    case actions.ADD_TODO_ERROR:
+      return {
+        ...state,
+        error: action.error,
+      };
     case actions.DELETE_TODO:
       return {
         ...state,
-        data: state.filter((t, index) => index !== action.index),
+        data: state.data.filter((t, index) => index !== action.index),
       };
     case actions.TOGGLE_TODO: {
       return {
         ...state,
-        data: state.map((t, index) =>
+        data: state.data.map((t, index) =>
           index === action.index ? { ...t, done: !t.done } : t
         ),
       };
@@ -38,7 +43,7 @@ export const todoReducer = (
       if (action.todos) {
         return {
           ...state,
-          data: [...state.data, action.todos],
+          data: action.todos,
           loading: false,
           error: null,
         };

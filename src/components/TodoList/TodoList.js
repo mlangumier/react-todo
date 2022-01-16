@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from "react";
 import TodoElement from "./TodoElement/TodoElement";
 import { connect } from "react-redux";
 import {
@@ -8,24 +8,30 @@ import {
   fetchTodo,
 } from "../../store/actions";
 
-function TodoList(props) {
-  props.fetchTodo();
+// function TodoList(props) {
+class TodoList extends Component {
+  constructor(props) {
+    super(props);
+    props.fetchTodo();
+  }
 
-  const { todos, deleteTodo, toggleTodo } = props;
+  render() {
+    const { todos, deleteTodo, toggleTodo } = this.props;
 
-  return (
-    <ul className="list-group">
-      {todos &&
-        todos.map((todo, index) => (
-          <TodoElement
-            key={todo.name}
-            todo={todo}
-            deleteTodo={() => deleteTodo(index)}
-            toggleTodo={() => toggleTodo(index)}
-          />
-        ))}
-    </ul>
-  );
+    return (
+      <ul className="list-group">
+        {todos &&
+          todos.map((todo, index) => (
+            <TodoElement
+              key={todo.name}
+              todo={todo}
+              deleteTodo={() => deleteTodo(index)}
+              toggleTodo={() => toggleTodo(index)}
+            />
+          ))}
+      </ul>
+    );
+  }
 }
 
 export default connect(

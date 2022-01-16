@@ -1,31 +1,36 @@
-import React, { useRef } from "react";
+import React, { Component } from "react";
 import { connect } from "react-redux";
-import { addTodo } from "../../store/actions";
+import { tryAddTodo } from "../../store/actions";
 
-function InputTodo(props) {
-  const inputElement = useRef(null);
+class InputTodo extends Component {
+  constructor(props) {
+    super(props);
+    this.inputRef = React.createRef();
+  }
 
-  const submitTodo = () => {
-    // console.log(inputElement.current.value); //--OK
-    props.addTodo({
-      name: inputElement.current.value,
+  submitTodo = () => {
+    console.log(this.inputRef.current.value);
+    this.props.tryAddTodo({
+      name: this.inputRef.current.value,
       done: false,
     });
-    inputElement.current.value = "";
+    this.inputRef.current.value = "";
   };
 
-  return (
-    <div className="d-flex mb-4">
-      <input type="text" ref={inputElement} className="form-control mr-5" />
-      <button
-        type="button"
-        className="btn btn-outline-success"
-        onClick={submitTodo}
-      >
-        Add
-      </button>
-    </div>
-  );
+  render() {
+    return (
+      <div className="d-flex mb-4">
+        <input type="text" ref={this.inputRef} className="form-control mr-5" />
+        <button
+          type="button"
+          className="btn btn-outline-success"
+          onClick={this.submitTodo}
+        >
+          Add
+        </button>
+      </div>
+    );
+  }
 }
 
-export default connect(null, { addTodo })(InputTodo);
+export default connect(null, { tryAddTodo })(InputTodo);
