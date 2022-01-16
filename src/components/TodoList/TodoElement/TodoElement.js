@@ -1,10 +1,10 @@
 import React from "react";
 
-const TodoItem = ({ todo, toggleTodo, deleteTodo }) => {
+const TodoItem = ({ todo, tryToggleTodo, tryDeleteTodo }) => {
   return (
     <li
       className="list-group-item d-flex flex-row justify-content-between align-items-center list-group"
-      onClick={toggleTodo}
+      onClick={tryToggleTodo}
     >
       <span>{todo.name}</span>
       <span>
@@ -18,7 +18,7 @@ const TodoItem = ({ todo, toggleTodo, deleteTodo }) => {
           className="btn btn-sm btn-outline-danger"
           onClick={(e) => {
             e.stopPropagation();
-            deleteTodo();
+            tryDeleteTodo();
           }}
         >
           Delete

@@ -3,9 +3,9 @@ import TodoElement from "./TodoElement/TodoElement";
 import { connect } from "react-redux";
 import {
   VisibilityFilters,
-  toggleTodo,
-  deleteTodo,
   fetchTodo,
+  tryDeleteTodo,
+  tryToggleTodo,
 } from "../../store/actions";
 
 // function TodoList(props) {
@@ -16,7 +16,7 @@ class TodoList extends Component {
   }
 
   render() {
-    const { todos, deleteTodo, toggleTodo } = this.props;
+    const { todos, tryDeleteTodo, tryToggleTodo } = this.props;
 
     return (
       <ul className="list-group">
@@ -25,8 +25,8 @@ class TodoList extends Component {
             <TodoElement
               key={todo.name}
               todo={todo}
-              deleteTodo={() => deleteTodo(index)}
-              toggleTodo={() => toggleTodo(index)}
+              tryDeleteTodo={() => tryDeleteTodo(index)}
+              tryToggleTodo={() => tryToggleTodo(index)}
             />
           ))}
       </ul>
@@ -57,8 +57,8 @@ export default connect(
     return { todos };
   },
   {
-    toggleTodo,
-    deleteTodo,
+    tryToggleTodo,
+    tryDeleteTodo,
     fetchTodo,
   }
 )(TodoList);

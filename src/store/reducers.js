@@ -9,6 +9,7 @@ export const todoReducer = (
   action
 ) => {
   switch (action.type) {
+    // ADD
     case actions.ADD_TODO_SUCCESS:
       return {
         ...state,
@@ -19,12 +20,9 @@ export const todoReducer = (
         ...state,
         error: action.error,
       };
-    case actions.DELETE_TODO:
-      return {
-        ...state,
-        data: state.data.filter((t, index) => index !== action.index),
-      };
-    case actions.TOGGLE_TODO: {
+
+    // TOGGLE DONE
+    case actions.TOGGLE_TODO_SUCCESS: {
       return {
         ...state,
         data: state.data.map((t, index) =>
@@ -32,6 +30,25 @@ export const todoReducer = (
         ),
       };
     }
+    case actions.TOGGLE_TODO_ERROR: {
+      return {
+        ...state,
+        error: action.error,
+      };
+    }
+
+    // DELETE
+    case actions.DELETE_TODO_SUCCESS:
+      return {
+        ...state,
+        data: state.data.filter((t, index) => index !== action.index),
+      };
+    case actions.DELETE_TODO_ERROR:
+      return {
+        ...state,
+        error: action.error
+      }
+
     // HTTPs
     case actions.REQUEST_TODO: {
       return {

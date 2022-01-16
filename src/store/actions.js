@@ -1,13 +1,18 @@
 import apiFirebase from "../config/api.firebase";
 
-// export const ADD_TODO = "ADD_TODO";
-export const DELETE_TODO = "DELETE_TODO";
-export const TOGGLE_TODO = "TOGGLE_TODO";
-export const SET_FILTER = "SET_FILTER";
-
 export const TRY_ADD_TODO = "TRY_ADD_TODO";
 export const ADD_TODO_SUCCESS = "ADD_TODO_SUCCESS";
 export const ADD_TODO_ERROR = "ADD_TODO_ERROR";
+
+export const TRY_TOGGLE_TODO = "TRY_TOGGLE_TODO";
+export const TOGGLE_TODO_SUCCESS = "TOGGLE_TODO_SUCCESS";
+export const TOGGLE_TODO_ERROR = "TOGGLE_TODO_ERROR";
+
+export const TRY_DELETE_TODO = "TRY_DELETE_TODO";
+export const DELETE_TODO_SUCCESS = "DELETE_TODO_SUCCESS";
+export const DELETE_TODO_ERROR = "DELETE_TODO_ERROR";
+
+export const SET_FILTER = "SET_FILTER";
 
 export const REQUEST_TODO = "REQUEST_TODO";
 export const FETCH_TODO = "FETCH_TODO";
@@ -23,9 +28,8 @@ export const VisibilityFilters = {
 // AJOUTER TODO
 
 export const tryAddTodo = (todo) => {
-  return (dispatch, getState, state, store) => {
+  return (dispatch, getState) => {
     const todos = [...getState().todoReducer.data, todo];
-    console.log(todos);
     return apiFirebase.put("todos.json", todos).then(
       (response) => dispatch(addTodoSuccess(todo)),
       (error) => dispatch(addTodoError(error))
@@ -49,19 +53,59 @@ export const addTodoError = (error) => {
 
 // SUPPRIMER TODO
 
-export const deleteTodo = (index) => {
+export const tryDeleteTodo = (index) => {
+  return (dispatch, getState) => {
+    const myTodos = [
+      ...getState().todoReducer.data.filter((todo, i) => i !== index),
+    ];
+    return apiFirebase.put("todos.json", myTodos).then(
+      (response) => dispatch(deleteTodoSuccess(index)),
+      (error) => dispatch(deleteTodoError(error))
+    );
+  };
+};
+
+export const deleteTodoSuccess = (index) => {
   return {
-    type: DELETE_TODO,
+    type: DELETE_TODO_SUCCESS,
     index,
+  };
+};
+
+export const deleteTodoError = (error) => {
+  return {
+    type: DELETE_TODO_ERROR,
+    error,
   };
 };
 
 // TOGGLE TODO
 
-export const toggleTodo = (index) => {
+export const tryToggleTodo = (index) => {
+  return (dispatch, getState) => {
+    const toggleIndex = [
+      ...getState().todoReducer.data.map((todo, i) =>
+        i === index ? { ...todo, done: !todo.done } : todo
+      ),
+    ];
+    return apiFirebase.put("todos.json", toggleIndex).then(
+      (response) => dispatch(toggleTodoSuccess(index)),
+      (error) => dispatch(toggleTodoError(error))
+    );
+  };
+};
+
+export const toggleTodoSuccess = (index) => {
   return {
-    type: TOGGLE_TODO,
+    type: TOGGLE_TODO_SUCCESS,
     index,
+  };
+};
+
+export const toggleTodoError = (error) => {
+  return {
+    type: TOGGLE_TODO_ERROR,
+    error,
   };
 };
 
