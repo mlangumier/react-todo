@@ -3,7 +3,7 @@ import React from "react";
 const TodoItem = ({ todo, tryToggleTodo, tryDeleteTodo }) => {
   return (
     <li
-      className="list-group-item d-flex flex-row justify-content-between align-items-center list-group"
+      className="list-group-item flex-column d-flex justify-content-between align-items-center"
       onClick={tryToggleTodo}
     >
       <span>{todo.name}</span>

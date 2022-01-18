@@ -6,7 +6,7 @@ import { Routes, Route, Navigate } from "react-router-dom";
 
 function App() {
   return (
-    <div className="p-5">
+    <div className="p-5" style={{ maxWidth: "768px", margin: "auto" }}>
       <h4>Add a new entry</h4>
       <InputTodo />
       <div className="card">

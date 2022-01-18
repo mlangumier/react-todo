@@ -20,12 +20,12 @@ const TodoList = () => {
   return (
     <ul className="list-group">
       {todoList &&
-        todoList.map((todo) => (
+        todoList.map((todo, index) => (
           <TodoElement
-            key={todo.index}
+            key={todo.name}
             todo={todo}
-            tryDeleteTodo={() => dispatch(tryDeleteTodo(todo.index))}
-            tryToggleTodo={() => dispatch(tryToggleTodo(todo.index))}
+            tryDeleteTodo={() => dispatch(tryDeleteTodo(index))}
+            tryToggleTodo={() => dispatch(tryToggleTodo(index))}
           />
         ))}
     </ul>
