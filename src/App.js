@@ -2,6 +2,7 @@ import "./App.css";
 import Filters from "./components/Filters/Filters";
 import InputTodo from "./components/InputTodo/InputTodo";
 import TodoList from "./components/TodoList/TodoList";
+import { Routes, Route, Navigate } from "react-router-dom";
 
 function App() {
   return (
@@ -14,7 +15,10 @@ function App() {
           <Filters />
         </div>
         <div className="card-body">
-          <TodoList />
+          <Routes>
+            <Route path="/:filter" element={<TodoList />} />
+            <Route path="*" element={<Navigate to="/all" replace />} />
+          </Routes>
         </div>
       </div>
     </div>

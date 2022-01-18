@@ -1,32 +1,20 @@
 import React from "react";
-import { connect } from "react-redux";
-import { setFilter, VisibilityFilters } from "../../store/actions";
+import { NavLink } from "react-router-dom";
 
-function Filters({ setFilter }) {
+const Filters = (props) => {
   return (
     <>
-      <button
-        className="btn btn-outline-primary mr-2"
-        onClick={() => setFilter(VisibilityFilters.SHOW_ALL)}
-      >
+      <NavLink to="/all" className="btn btn-outline-primary mr-2">
         All
-      </button>
-      <button
-        className="btn btn-outline-primary mr-2"
-        onClick={() => setFilter(VisibilityFilters.SHOW_DONE)}
-      >
+      </NavLink>
+      <NavLink to="/done" className="btn btn-outline-primary mr-2">
         Done
-      </button>
-      <button
-        className="btn btn-outline-primary mr-2"
-        onClick={() => setFilter(VisibilityFilters.SHOW_PENDING)}
-      >
+      </NavLink>
+      <NavLink to="/pending" className="btn btn-outline-primary">
         Pending
-      </button>
+      </NavLink>
     </>
   );
-}
+};
 
-export default connect(null, {
-  setFilter,
-})(Filters);
+export default Filters;

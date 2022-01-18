@@ -12,22 +12,15 @@ export const TRY_DELETE_TODO = "TRY_DELETE_TODO";
 export const DELETE_TODO_SUCCESS = "DELETE_TODO_SUCCESS";
 export const DELETE_TODO_ERROR = "DELETE_TODO_ERROR";
 
-export const SET_FILTER = "SET_FILTER";
-
 export const REQUEST_TODO = "REQUEST_TODO";
 export const FETCH_TODO = "FETCH_TODO";
 export const FETCH_TODO_SUCCESS = "FETCH_TODO_SUCCESS";
 export const FETCH_TODO_ERROR = "FETCH_TODO_ERROR";
 
-export const VisibilityFilters = {
-  SHOW_ALL: "SHOW_ALL",
-  SHOW_DONE: "SHOW_DONE",
-  SHOW_PENDING: "SHOW_PENDING",
-};
-
 // AJOUTER TODO
 
 export const tryAddTodo = (todo) => {
+  
   return (dispatch, getState) => {
     const todos = [...getState().todoReducer.data, todo];
     return apiFirebase.put("todos.json", todos).then(
@@ -106,15 +99,6 @@ export const toggleTodoError = (error) => {
   return {
     type: TOGGLE_TODO_ERROR,
     error,
-  };
-};
-
-// GERER FILTRE
-
-export const setFilter = (filter) => {
-  return {
-    type: SET_FILTER,
-    filter,
   };
 };
 

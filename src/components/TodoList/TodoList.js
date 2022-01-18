@@ -1,43 +1,35 @@
-import React, { Component } from "react";
+import React, { useEffect } from "react";
 import TodoElement from "./TodoElement/TodoElement";
-import { connect } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { fetchTodo, tryDeleteTodo, tryToggleTodo } from "../../store/actions";
 import { filteredTodoDataSelector } from "../../store/selectors";
+import { useParams } from "react-router-dom";
 
-class TodoList extends Component {
-  constructor(props) {
-    super(props);
-    props.fetchTodo();
-  }
+const TodoList = () => {
+  const dispatch = useDispatch();
+  const filter = useParams().filter;
 
-  render() {
-    const { todoList, tryDeleteTodo, tryToggleTodo } = this.props;
+  const todoList = useSelector((state) =>
+    filteredTodoDataSelector(filter, state?.todoReducer?.data)
+  );
 
-    return (
-      <ul className="list-group">
-        {todoList &&
-          todoList.map((todo, index) => (
-            <TodoElement
-              key={todo.name}
-              todo={todo}
-              tryDeleteTodo={() => tryDeleteTodo(index)}
-              tryToggleTodo={() => tryToggleTodo(index)}
-            />
-          ))}
-      </ul>
-    );
-  }
-}
+  useEffect(() => {
+    dispatch(fetchTodo());
+  }, [dispatch]);
 
-export default connect(
-  (state) => {
-    return {
-      todoList: filteredTodoDataSelector(state),
-    };
-  },
-  {
-    tryToggleTodo,
-    tryDeleteTodo,
-    fetchTodo,
-  }
-)(TodoList);
+  return (
+    <ul className="list-group">
+      {todoList &&
+        todoList.map((todo) => (
+          <TodoElement
+            key={todo.index}
+            todo={todo}
+            tryDeleteTodo={() => dispatch(tryDeleteTodo(todo.index))}
+            tryToggleTodo={() => dispatch(tryToggleTodo(todo.index))}
+          />
+        ))}
+    </ul>
+  );
+};
+
+export default TodoList;

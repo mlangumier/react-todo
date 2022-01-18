@@ -46,8 +46,8 @@ export const todoReducer = (
     case actions.DELETE_TODO_ERROR:
       return {
         ...state,
-        error: action.error
-      }
+        error: action.error,
+      };
 
     // HTTPs
     case actions.REQUEST_TODO: {
@@ -78,18 +78,6 @@ export const todoReducer = (
         error: action.error,
       };
     }
-    default:
-      return state;
-  }
-};
-
-export const filterReducer = (
-  state = actions.VisibilityFilters.SHOW_ALL,
-  action
-) => {
-  switch (action.type) {
-    case actions.SET_FILTER:
-      return action.filter;
     default:
       return state;
   }

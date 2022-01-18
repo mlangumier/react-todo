@@ -1,36 +1,35 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
+import React, { useRef } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { tryAddTodo } from "../../store/actions";
 
-class InputTodo extends Component {
-  constructor(props) {
-    super(props);
-    this.inputRef = React.createRef();
-  }
+const InputTodo = () => {
+  const dispatch = useDispatch();
+  const todoList = useSelector((state) => state?.todoReducer?.data);
+  const ref = useRef("");
 
-  submitTodo = () => {
-    console.log(this.inputRef.current.value);
-    this.props.tryAddTodo({
-      name: this.inputRef.current.value,
-      done: false,
-    });
-    this.inputRef.current.value = "";
+  const submitTodo = () => {
+    dispatch(
+      tryAddTodo({
+        name: ref.current.value,
+        done: false,
+        index: todoList[todoList.length - 1]?.index + 1 || 0,
+      })
+    );
+    ref.current.value = "";
   };
 
-  render() {
-    return (
-      <div className="d-flex mb-4">
-        <input type="text" ref={this.inputRef} className="form-control mr-5" />
-        <button
-          type="button"
-          className="btn btn-outline-success"
-          onClick={this.submitTodo}
-        >
-          Add
-        </button>
-      </div>
-    );
-  }
-}
+  return (
+    <div className="d-flex mb-4">
+      <input type="text" ref={ref} className="form-control mr-5" />
+      <button
+        type="button"
+        className="btn btn-outline-success"
+        onClick={submitTodo}
+      >
+        Add
+      </button>
+    </div>
+  );
+};
 
-export default connect(null, { tryAddTodo })(InputTodo);
+export default InputTodo;
