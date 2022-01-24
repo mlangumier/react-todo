@@ -1,4 +1,4 @@
-import apiFirebase from "../config/api.firebase";
+import apiFirebase from "../../../config/api.firebase";
 
 export const TRY_ADD_TODO = "TRY_ADD_TODO";
 export const ADD_TODO_SUCCESS = "ADD_TODO_SUCCESS";
@@ -20,7 +20,6 @@ export const FETCH_TODO_ERROR = "FETCH_TODO_ERROR";
 // AJOUTER TODO
 
 export const tryAddTodo = (todo) => {
-  
   return (dispatch, getState) => {
     const todos = [...getState().todoReducer.data, todo];
     return apiFirebase.put("todos.json", todos).then(

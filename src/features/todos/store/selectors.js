@@ -21,4 +21,6 @@ export const filteredTodoDataSelector = (filter, todoList) => {
       }
     }
   }
+
+  console.log(todoList);
 };
